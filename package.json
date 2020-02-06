@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build": "fable-splitter src -o build --commonjs",
-    "testApp": "node build/App.js",
+    "start": "webpack-dev-server",
+    "build-for-browser": "webpack",
     "pretest": "fable-splitter tests -o build --commonjs",
     "test": "mocha build -t 10000",
     "test-dotnet": "dotnet run --project ./tests/Tests.fsproj"
@@ -10,7 +10,11 @@
   "dependencies": {
     "@babel/core": "^7.8.4",
     "fable-compiler": "^2.4.12",
+    "fable-loader": "^2.1.8",
     "fable-splitter": "^2.1.12",
-    "mocha": "^7.0.1"
+    "mocha": "^7.0.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3"
   }
 }

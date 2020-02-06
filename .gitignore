@@ -1,19 +1,18 @@
 .ionide/
 .vs/
 
-# Fable adds a .gitignore file in this dir be default
-#.fable/
+# fable compiler output via webpack (fable-loader)
+bundle.js
+bundle.js.map
 
-# dotnet compiler output
+# fable compiler output via nodejs (fable-splitter)
+build/
+
+# dotnet F# compiler output
 [Dd]ebug/
 [Rr]elease/
-x64/
 [Bb]in/
 [Oo]bj/
-
-
-# fable compiler output
-build/
 
 node_modules/
 
