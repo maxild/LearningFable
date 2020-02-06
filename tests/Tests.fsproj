@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- <TargetFramework>netstandard2.0</TargetFramework> -->
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!-- <GenerateProgramFile>false</GenerateProgramFile> -->
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Tests.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Expecto" Version="8.13.1" />
+    <!-- NOTE: 'dotnet run' instead of 'dotnet test'
+    <PackageReference Include="YoloDev.Expecto.TestSdk" Version="0.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.*" />
+    -->
+    <PackageReference Include="Fable.Mocha" Version="2.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\YourLibrary.fsproj" />
+  </ItemGroup>
+</Project>
