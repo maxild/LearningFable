@@ -2,10 +2,16 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server",
-    "build-for-browser": "webpack",
-    "pretest": "fable-splitter tests -o build --commonjs",
-    "test": "mocha build -t 10000",
-    "test-dotnet": "dotnet run --project ./tests/Tests.fsproj"
+    "test": "dotnet run --project ./tests/Tests.fsproj",
+
+    "build-browser": "webpack",
+    "test-browser": "webpack-dev-server",
+
+    "build-nodejs" : "fable-splitter tests -o build --commonjs",
+    "test-nodejs": "fable-splitter tests -o build --commonjs && mocha build -t 10000",
+
+    "build-dotnet-lib": "dotnet build ./src/YourLibrary.fsproj",
+    "build-dotnet": "dotnet build ./tests/Tests.fsproj"
   },
   "dependencies": {
     "@babel/core": "^7.8.4",

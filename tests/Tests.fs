@@ -9,8 +9,25 @@ open Expecto
 
 open YourLibrary
 
+let treeTests =
+    testList "Tree tests" [
+
+        testCase "size works" <| fun () ->
+            let sut = Node (2, Leaf 3, Leaf 8)
+            let size = treeSize sut
+            Expect.equal 3 size "wrong size"
+    ]
+
 let arithmeticTests =
     testList "Arithmetic tests" [
+
+        testCase "Euclids GCD works" <| fun () ->
+            Expect.equal (gcd 12 27) 3 "gcd of 12 and 27 is 3"
+            Expect.equal (gcdInt 12 27) 3 "gcd of 12 and 27 is 3"
+            Expect.equal (hcf 12 27) 3 "gcd of 12 and 27 is 3"
+            Expect.equal (hcfInt 12 27) 3 "gcd of 12 and 27 is 3"
+            Expect.equal (hcfFloat 12. 27.) 3. "gcd of 12 and 27 is 3"
+            Expect.equal (hcfDecimal 12M 27M) 3M "gcd of 12 and 27 is 3"
 
         testCase "randomFeature works" <| fun () ->
             let result = randomFeature()
@@ -34,14 +51,21 @@ let arithmeticTests =
             Expect.equal "ACTUALVALUE" "EXPECTEDVALUE" ""
     ]
 
+
+let allTests =
+    testList "all-tests" [
+        arithmeticTests
+        treeTests
+    ]
+
 //Mocha.runTests arithmeticTests |> ignore
 
 [<EntryPoint>]
 let main args =
 #if FABLE_COMPILER
     // Use Mocha (NodeJS or Browser)
-    Mocha.runTests arithmeticTests
+    Mocha.runTests allTests
 #else
     // Use the Expecto test runner (.NET Core via `dotnet run`)
-    runTestsWithArgs defaultConfig args arithmeticTests
+    runTestsWithArgs defaultConfig args allTests
 #endif
