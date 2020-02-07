@@ -28,6 +28,10 @@ let arithmeticTests =
                 let answer = x * 2
                 Expect.equal 42 answer "async"
             }
+
+        // pending tests are ignored
+        ptestCase "Test ACTUAL before EXPECTED" <| fun () ->
+            Expect.equal "ACTUALVALUE" "EXPECTEDVALUE" ""
     ]
 
 //Mocha.runTests arithmeticTests |> ignore
@@ -35,9 +39,9 @@ let arithmeticTests =
 [<EntryPoint>]
 let main args =
 #if FABLE_COMPILER
-    // Mocha (JS)
+    // Use Mocha (NodeJS or Browser)
     Mocha.runTests arithmeticTests
 #else
-    // Expecto (.NET)
+    // Use the Expecto test runner (.NET Core via `dotnet run`)
     runTestsWithArgs defaultConfig args arithmeticTests
 #endif
