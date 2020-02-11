@@ -3,6 +3,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Monoid.fs" />
     <Compile Include="Library.fs" />
+    <Compile Include="Stack.fs" />
+    <Compile Include="Continuations.fs" />
+    <Compile Include="Functor.fs" />
+    <Compile Include="Monad.fs" />
+    <Compile Include="ReaderMonad.fs" />
   </ItemGroup>
 </Project>

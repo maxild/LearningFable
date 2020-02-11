@@ -9,6 +9,7 @@ open Expecto
 
 open YourLibrary
 
+
 let treeTests =
     testList "Tree tests" [
 
@@ -16,6 +17,38 @@ let treeTests =
             let sut = Node (2, Leaf 3, Leaf 8)
             let size = treeSize sut
             Expect.equal 3 size "wrong size"
+    ]
+
+let polymorphicFunctionTests =
+    testList "Polymorphic Function Tests" [
+        testList "Type Constraint Tests" [
+
+            testCase "Enum values" <| fun () ->
+                let values = getValues2<System.DayOfWeek, int>()
+                //let values = getValues<System.DateTime>()
+                let expectedValues =
+                    [| System.DayOfWeek.Sunday;
+                       System.DayOfWeek.Monday;
+                       System.DayOfWeek.Tuesday;
+                       System.DayOfWeek.Wednesday;
+                       System.DayOfWeek.Thursday;
+                       System.DayOfWeek.Friday;
+                       System.DayOfWeek.Saturday; |]
+                Expect.equal values expectedValues "wrong DayOfWeek values"
+        ]
+
+        testList "SRTP: Statically Resolved Type Paramaters" [
+
+            testCase "implicit conversion operator" <| fun () ->
+                let (!!) : string -> System.Xml.Linq.XNamespace = implicit
+                let foo = !!"" + "foo"
+                Expect.equal (foo.GetType().Name) "XName" "empty XNamespace and appending our 'foo' gives XName"
+
+            testCase "op_Addition" <| fun () ->
+                Expect.equal (add 1 2) 3 "add works"
+                Expect.equal (add 1. 2.) 3. "add works"
+                Expect.equal (add 1M 2M) 3M "add works"
+        ]
     ]
 
 let arithmeticTests =
@@ -55,6 +88,7 @@ let arithmeticTests =
 let allTests =
     testList "all-tests" [
         arithmeticTests
+        polymorphicFunctionTests
         treeTests
     ]
 
