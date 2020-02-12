@@ -10,5 +10,8 @@
     <Compile Include="Functor.fs" />
     <Compile Include="Monad.fs" />
     <Compile Include="ReaderMonad.fs" />
+    <Compile Include="MaybeMonad.fs" />
+    <Compile Include="MonadTutorial.fs" />
+    <Compile Include="FSharpPlusSnippet.fs" />
   </ItemGroup>
 </Project>

@@ -137,18 +137,6 @@ let (>>=) f g = bind g f
 // Convention bind anf (>>=) have params flipped????!!!!????
 //let (>>=) = bind
 
-// Computation Expression
-
-type ReaderBuilder() =
-  member x.Return(v) = Reader.return' v
-  member x.Bind(v, f) = Reader.bind f v
-//   member x.Delay(f) = Reader (fun s ->
-//     let (Reader h) = f ()
-//     h s )
-
-let reader = ReaderBuilder()
-
-
 // This is our environment type
 type Dependency =
     { Username: string
@@ -383,6 +371,86 @@ module Example =
     // Shared view envorinment..think props in React!!!
     let email = "mmaxild@gmail.com"
     printfn "%s" <| runReader viewM email
+
+    // Computation Expression
+
+    type ReaderBuilder() =
+        member _.Return(v) = return' v
+        member _.Bind(v, f) = bind f v
+        // member _.Delay(f) = ReaderM (fun s ->
+        //     let (ReaderM h) = f ()
+        //     h s )
+        //member inline _.Zero () = return' ()
+
+    let reader = ReaderBuilder()
+
+    let widgetCE =
+        reader {
+            let! email = ask
+            let html = div
+                        [ p [ "Hey " + email + ", we've got a great offer for you!" ]
+                        ]
+            return html
+        }
+
+    let articleCE =
+        reader { let! widgetHtml = widgetCE
+                 let html = div
+                                [ p [ "this is an article" ]
+                                ; widgetHtml
+                                ]
+                 return html }
+
+    let rightCE =
+        reader { let! articleHtml = articleCE
+                 let html = div
+                              [ articleHtml
+                              ]
+                 return html }
+
+    let leftCE =
+        div
+            [ p [ "this is the left side" ]
+            ]
+
+    let contentCE =
+        reader { let! email = ask
+                 let! rightHtml = rightCE
+                 let html = div
+                                [ h1 [ "Custom Content for " + email ]
+                                ; left
+                                ; rightHtml
+                                ]
+                 return html }
+
+    let topNavCE =
+          div
+            [ h1 [ "OurSite.com" ]
+            ]
+
+    let pageCE =
+        reader { let! contentHtml = contentCE
+                 let html = div
+                              [ topNavM
+                              ; contentHtml
+                              ]
+                 return html }
+
+    let viewCE =
+        reader { let! pageHtml = pageCE
+                 let html = div
+                                [ pageHtml
+                                ]
+                 return html }
+
+    // we can run the reader monad like this
+    // Shared view envorinment..think props in React!!!
+    let email = "mmaxild@gmail.com"
+    printfn "%s" <| runReader viewCE email
+
+
+
+
 
     //----------------
 
